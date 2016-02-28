@@ -26,6 +26,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
+        <activity android:name=".RecorderActivity" />
+        <activity android:name=".ViewerActivity"></activity>
     </application>
 
 </manifest>
