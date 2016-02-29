@@ -25,4 +25,10 @@
     <string name="nav_viewer">View</string>
     <string name="record_time_template" translatable="false">%1$2d:%2$2d:%3$2d</string>
     <string name="recorder_recording">RECORDING</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="viewer_resources">All Records</string>
+    <string name="viewer_local_resources">Local Records</string>
+    <string name="viewer_local_audio">Local Audio Files</string>
 </resources>

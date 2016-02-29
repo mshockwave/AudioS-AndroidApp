@@ -1,5 +1,6 @@
 package com.audioservice.audios;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -112,6 +113,12 @@ public class MainActivity extends AppCompatActivity
                 case 3:{
                     holder.TextTitle.setText(R.string.nav_viewer);
                     holder.ImageIcon.setImageResource(R.drawable.ic_list_black_48dp);
+                    holder.Container.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(MainActivity.this, ViewerActivity.class));
+                        }
+                    });
                     break;
                 }
             }
