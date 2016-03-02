@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class LocalAudioFragmentAdapter extends RecyclerView.Adapter<LocalAudioFragmentAdapter.ViewHolder> {
-    private String[] mDataset;
+    private ArrayList<String> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -22,7 +24,7 @@ public class LocalAudioFragmentAdapter extends RecyclerView.Adapter<LocalAudioFr
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public LocalAudioFragmentAdapter(String[] myDataset) {
+    public LocalAudioFragmentAdapter(ArrayList<String> myDataset) {
         mDataset = myDataset;
     }
 
@@ -42,12 +44,13 @@ public class LocalAudioFragmentAdapter extends RecyclerView.Adapter<LocalAudioFr
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset[position]);
+        String info = mDataset.get(position);
+        holder.mTextView.setText(info);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }

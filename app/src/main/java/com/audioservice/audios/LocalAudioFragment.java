@@ -10,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 public class LocalAudioFragment extends Fragment {
+
+    ArrayList<String> list = new ArrayList<>();
 
     public LocalAudioFragment() {
         // Required empty public constructor
@@ -32,8 +36,10 @@ public class LocalAudioFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_local_audio, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        LocalAudioFragmentAdapter localAudioFragmentAdapter = new LocalAudioFragmentAdapter(new String[] {"test"});
+        for (Integer i = 0; i < 100; i++) {
+            list.add("test" + i.toString());
+        }
+        LocalAudioFragmentAdapter localAudioFragmentAdapter = new LocalAudioFragmentAdapter(list);
         recyclerView.setAdapter(localAudioFragmentAdapter);
         return rootView;
     }
