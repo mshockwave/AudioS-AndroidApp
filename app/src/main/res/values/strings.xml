@@ -31,4 +31,8 @@
     <string name="viewer_resources">All Records</string>
     <string name="viewer_local_resources">Local Records</string>
     <string name="viewer_local_audio">Local Audio Files</string>
+
+    <!-- Strings related to LocalAudioFragment -->
+    <string name="delete_description">Delete the audio file</string>
+    <string name="upload_description">Upload the audio file</string>
 </resources>

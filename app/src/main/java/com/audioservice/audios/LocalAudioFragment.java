@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class LocalAudioFragment extends Fragment {
@@ -36,9 +38,12 @@ public class LocalAudioFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_local_audio, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        for (Integer i = 0; i < 100; i++) {
-            list.add("test" + i.toString());
-        }
+        // Add the file list to list array
+        File file = new File(Public.ExternalDir.getPath() + "/" + Public.Constants.AUDIO_FILES_DIR);
+        File fileArr[] = file.listFiles();
+        for (File f : fileArr)
+            list.add(f.getName());
+        // Set the adapter
         LocalAudioFragmentAdapter localAudioFragmentAdapter = new LocalAudioFragmentAdapter(list);
         recyclerView.setAdapter(localAudioFragmentAdapter);
         return rootView;
