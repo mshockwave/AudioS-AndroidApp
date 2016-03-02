@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class LocalAudioFragmentAdapter extends RecyclerView.Adapter<LocalAudioFragmentAdapter.ViewHolder> {
     private String[] mDataset;
 
     // Provide a reference to the views for each data item
@@ -24,14 +22,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(String[] myDataset) {
+    public LocalAudioFragmentAdapter(String[] myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public LocalAudioFragmentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                   int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_local_audio_adapter, parent, false);
