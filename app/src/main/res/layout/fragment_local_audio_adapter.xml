@@ -38,7 +38,7 @@
         android:layout_toStartOf="@+id/delete_button"
         android:layout_toLeftOf="@+id/delete_button"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_file_upload_black_48dp"
+        android:src="@drawable/edit_query"
         android:contentDescription="@string/upload_description" />
 
 </RelativeLayout>
