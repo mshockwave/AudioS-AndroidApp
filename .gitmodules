@@ -1,0 +1,6 @@
+[submodule "rest"]
+  path = rest
+  url = https://github.com/mshockwave/AudioS-AndroidApp-REST-Module.git
+[submodule "map"]
+  path = map
+  url = https://github.com/mshockwave/AudioS-AndroidApp-Map-Module.git
