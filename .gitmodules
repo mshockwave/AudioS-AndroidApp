@@ -5,3 +5,6 @@
 [submodule "map"]
 	path = map
 	url = https://github.com/mshockwave/AudioS-AndroidApp-Map-Module.git
+[submodule "ringdroid"]
+	path = ringdroid
+	url = https://github.com/mshockwave/AudioS-AndroidApp-Ringdroid-Module.git
