@@ -16,6 +16,10 @@ public class Public {
 
     public static class Constants {
         public static final String AUDIO_FILES_DIR = "AudioFiles";
+
+        public static final String EXTRA_BOOL_SHOW_LOCAL_ONLY = "extra-show-local";
+        public static final String EXTRA_BOOL_NOT_LOGIN = "extra-not-login";
+        public static final String EXTRA_STRING_SHOW_TOAST_MESSAGE = "extra-toast-message";
     }
 
     public static class Routines {

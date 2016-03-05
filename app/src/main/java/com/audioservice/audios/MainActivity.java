@@ -3,24 +3,25 @@ package com.audioservice.audios;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,9 +55,42 @@ public class MainActivity extends AppCompatActivity
 
         /*--------------------------------------------*/
 
+        final DashBoardAdapter adapter = new DashBoardAdapter();
+        if(intent.getBooleanExtra(Public.Constants.EXTRA_BOOL_NOT_LOGIN, false)){
+            adapter.addItem(R.string.nav_recorder,
+                        R.drawable.ic_mic_black_48dp, null);
+            adapter.addItem(R.string.nav_public_map,
+                        R.drawable.ic_map_black_48dp, null);
+            adapter.addItem(R.string.nav_viewer,
+                        R.drawable.ic_list_black_48dp,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(MainActivity.this, ViewerActivity.class);
+                                intent.putExtra(Public.Constants.EXTRA_BOOL_SHOW_LOCAL_ONLY, true);
+                                startActivity(intent);
+                            }
+                        });
+        }else{
+            adapter.addItem(R.string.nav_recorder,
+                    R.drawable.ic_mic_black_48dp, null);
+            adapter.addItem(R.string.nav_public_map,
+                    R.drawable.ic_map_black_48dp, null);
+            adapter.addItem(R.string.nav_upload,
+                    R.drawable.ic_file_upload_black_48dp, null);
+            adapter.addItem(R.string.nav_viewer,
+                    R.drawable.ic_list_black_48dp,
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(MainActivity.this, ViewerActivity.class));
+                        }
+                    });
+        }
+
         RecyclerView dashGrid = (RecyclerView)findViewById(R.id.main_dashboard_grid);
         dashGrid.setLayoutManager(new GridLayoutManager(this, 2));
-        dashGrid.setAdapter(mDashBoardAdapter);
+        dashGrid.setAdapter(adapter);
     }
 
     @Override
@@ -67,6 +103,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private final class DashBoardEntry {
+        public int TextRes;
+        public int IconRes;
+        public View.OnClickListener OnClickCallback;
+        public DashBoardEntry(int t, int i, View.OnClickListener c){
+            TextRes = t;
+            IconRes = i;
+            OnClickCallback = c;
+        }
+    }
     private final class DashBoardVH extends RecyclerView.ViewHolder {
 
         public TextView TextTitle;
@@ -80,7 +126,10 @@ public class MainActivity extends AppCompatActivity
             ImageIcon = (ImageView)container.findViewById(R.id.image_icon);
         }
     }
-    private final RecyclerView.Adapter<DashBoardVH> mDashBoardAdapter = new RecyclerView.Adapter<DashBoardVH>() {
+    private final class DashBoardAdapter extends RecyclerView.Adapter<DashBoardVH> {
+
+        private final List<DashBoardEntry> mItemList = new ArrayList<>();
+
         @Override
         public DashBoardVH onCreateViewHolder(ViewGroup parent, int viewType) {
             View rootView = LayoutInflater.from(parent.getContext())
@@ -88,44 +137,21 @@ public class MainActivity extends AppCompatActivity
             return new DashBoardVH(rootView);
         }
 
+        public void addItem(int textRes, int imgRes, View.OnClickListener clickCallback){
+            mItemList.add(new DashBoardEntry(textRes, imgRes, clickCallback));
+        }
+
         @Override
         public void onBindViewHolder(DashBoardVH holder, int position) {
-            switch (position){
-                case 0:{
-                    holder.TextTitle.setText(R.string.nav_recorder);
-                    holder.ImageIcon.setImageResource(R.drawable.ic_mic_black_48dp);
-                    //TODO: onClick callback
-                    break;
-                }
-
-                case 1:{
-                    holder.TextTitle.setText(R.string.nav_public_map);
-                    holder.ImageIcon.setImageResource(R.drawable.ic_map_black_48dp);
-                    break;
-                }
-
-                case 2:{
-                    holder.TextTitle.setText(R.string.nav_upload);
-                    holder.ImageIcon.setImageResource(R.drawable.ic_file_upload_black_48dp);
-                    break;
-                }
-
-                case 3:{
-                    holder.TextTitle.setText(R.string.nav_viewer);
-                    holder.ImageIcon.setImageResource(R.drawable.ic_list_black_48dp);
-                    holder.Container.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(MainActivity.this, ViewerActivity.class));
-                        }
-                    });
-                    break;
-                }
-            }
+            DashBoardEntry item = mItemList.get(position);
+            holder.TextTitle.setText(item.TextRes);
+            holder.ImageIcon.setImageResource(item.IconRes);
+            if(item.OnClickCallback != null) holder.Container.setOnClickListener(item.OnClickCallback);
         }
+
         @Override
-        public int getItemCount() { return 4; }
-    };
+        public int getItemCount() { return mItemList.size(); }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -35,4 +35,5 @@
     <!-- Strings related to LocalAudioFragment -->
     <string name="delete_description">Delete the audio file</string>
     <string name="upload_description">Upload the audio file</string>
+    <string name="offline_mode">Offline mode. Please check your internet connection</string>
 </resources>
