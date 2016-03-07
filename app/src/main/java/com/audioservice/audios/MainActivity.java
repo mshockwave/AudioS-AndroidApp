@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity
                                 startActivity(intent);
                             }
                         });
+            setDrawerState(drawer, toggle, false);
         }else{
             adapter.addItem(R.string.nav_recorder,
                     R.drawable.ic_mic_black_48dp, null);
@@ -86,11 +87,18 @@ public class MainActivity extends AppCompatActivity
                             startActivity(new Intent(MainActivity.this, ViewerActivity.class));
                         }
                     });
+            setDrawerState(drawer, toggle, true);
         }
 
         RecyclerView dashGrid = (RecyclerView)findViewById(R.id.main_dashboard_grid);
         dashGrid.setLayoutManager(new GridLayoutManager(this, 2));
         dashGrid.setAdapter(adapter);
+    }
+
+    private void setDrawerState(DrawerLayout drawer, ActionBarDrawerToggle toggle, boolean enable){
+        drawer.setDrawerLockMode((enable)?DrawerLayout.LOCK_MODE_UNLOCKED : DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        toggle.setDrawerIndicatorEnabled(enable);
+        toggle.syncState();
     }
 
     @Override
