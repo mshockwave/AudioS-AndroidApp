@@ -60,6 +60,7 @@ public class EntryActivity extends AppCompatActivity {
 
         @Override
         public void onFailure(Throwable t) {
+            t.printStackTrace();
             bailNotLogin();
         }
     };
