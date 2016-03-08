@@ -38,4 +38,7 @@
     <string name="offline_mode">Offline mode. Please check your internet connection</string>
     <string name="login">Login</string>
     <string name="login_or_sign_up">Login / Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
 </resources>

@@ -185,6 +185,9 @@ public class MainActivity extends AppCompatActivity
             }
 
             case R.id.action_login: {
+                Intent intent = new Intent(MainActivity.this, LoginRegisterActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
             }
         }
