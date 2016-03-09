@@ -32,11 +32,9 @@
             -->
         </activity>
         <activity android:name=".RecorderActivity" />
-
         <activity
             android:name=".ViewerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".EntryActivity"
             android:noHistory="true"
@@ -47,11 +45,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoginRegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".NetworkReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
