@@ -33,12 +33,12 @@
     </android.support.design.widget.TextInputLayout>
 
     <TextView
-        android:id="@+id/login_error_msg"
+        android:id="@+id/text_login_status_msg"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_dark"/>
+        android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/but_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
