@@ -20,13 +20,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.audioservice.jeffchien.audios.rest.layouts.SimpleResult;
+import com.audioservice.jeffchien.audios.rest.layouts.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = MainActivity.class.getName();
+
+    private DrawerLayout mDrawer;
+    private TextView mTextNavUsername, mTextNavEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +57,19 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View navHeaderView;
+        if(navigationView.getHeaderCount() > 0
+                && (navHeaderView = navigationView.getHeaderView(0)) != null){
+            mTextNavUsername = (TextView)navHeaderView.findViewById(R.id.text_username);
+            mTextNavEmail = (TextView)navHeaderView.findViewById(R.id.text_email);
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         /*--------------------------------------------*/
@@ -78,7 +95,7 @@ public class MainActivity extends AppCompatActivity
                                 startActivity(intent);
                             }
                         });
-            setDrawerState(drawer, toggle, false);
+            setDrawerState(mDrawer, toggle, false);
         }else{
             adapter.addItem(R.string.nav_upload,
                     R.drawable.ic_file_upload_black_48dp, null);
@@ -90,7 +107,11 @@ public class MainActivity extends AppCompatActivity
                             startActivity(new Intent(MainActivity.this, ViewerActivity.class));
                         }
                     });
-            setDrawerState(drawer, toggle, true);
+            setDrawerState(mDrawer, toggle, true);
+
+            //Init user profile stuff in onCreate instead of onStart
+            //Since it's less important than saving bandwidth
+            initUserProfile();
         }
 
         RecyclerView dashGrid = (RecyclerView)findViewById(R.id.main_dashboard_grid);
@@ -112,6 +133,29 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void initUserProfile(){
+        Public.AudioS.getUserProfile().enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Response<User> response, Retrofit retrofit) {
+                if(response.code() == 200){
+                    if(mTextNavUsername != null && mTextNavEmail != null){
+                        mTextNavUsername.setText(response.body().profile.username);
+                        mTextNavEmail.setText(response.body().email);
+                    }
+                }else{
+                    Log.e(TAG, "Response code not 200 on getting user profile: " +
+                            response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e(TAG, "Error getting user profile");
+                t.printStackTrace();
+            }
+        });
     }
 
     private final class DashBoardEntry {
@@ -194,28 +238,40 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch(item.getItemId()){
+            case R.id.menu_nav_logout:{
+                Public.AudioS.userLogout().enqueue(mLogoutCallback);
+                Toast.makeText(MainActivity.this, R.string.processing, Toast.LENGTH_SHORT).show();
+                break;
+            }
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private final Callback<SimpleResult> mLogoutCallback = new Callback<SimpleResult>() {
+        @Override
+        public void onResponse(Response<SimpleResult> response, Retrofit retrofit) {
+            if(response.code() == 200){
+                Intent intent = new Intent(MainActivity.this, EntryActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }else{
+                Log.e(TAG, "Error logout user, response code: " + response.code());
+                Toast.makeText(MainActivity.this, R.string.error_logout, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            Log.e(TAG, "Error logout user");
+            t.printStackTrace();
+            Toast.makeText(MainActivity.this, R.string.error_logout, Toast.LENGTH_LONG).show();
+        }
+    };
 }
