@@ -58,11 +58,16 @@ public class MainActivity extends AppCompatActivity
         /*--------------------------------------------*/
 
         final DashBoardAdapter adapter = new DashBoardAdapter();
+        adapter.addItem(R.string.nav_recorder,
+                R.drawable.ic_mic_black_48dp, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(MainActivity.this, RecorderActivity.class));
+                    }
+                });
+        adapter.addItem(R.string.nav_public_map,
+                R.drawable.ic_map_black_48dp, null);
         if(intent.getBooleanExtra(Public.Constants.EXTRA_BOOL_NOT_LOGIN, false)){
-            adapter.addItem(R.string.nav_recorder,
-                        R.drawable.ic_mic_black_48dp, null);
-            adapter.addItem(R.string.nav_public_map,
-                        R.drawable.ic_map_black_48dp, null);
             adapter.addItem(R.string.nav_viewer,
                         R.drawable.ic_list_black_48dp,
                         new View.OnClickListener() {
@@ -75,10 +80,6 @@ public class MainActivity extends AppCompatActivity
                         });
             setDrawerState(drawer, toggle, false);
         }else{
-            adapter.addItem(R.string.nav_recorder,
-                    R.drawable.ic_mic_black_48dp, null);
-            adapter.addItem(R.string.nav_public_map,
-                    R.drawable.ic_map_black_48dp, null);
             adapter.addItem(R.string.nav_upload,
                     R.drawable.ic_file_upload_black_48dp, null);
             adapter.addItem(R.string.nav_viewer,
