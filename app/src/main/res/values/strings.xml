@@ -38,4 +38,17 @@
     <string name="offline_mode">Offline mode. Please check your internet connection</string>
     <string name="login">Login</string>
     <string name="login_or_sign_up">Login / Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="processing">Processing...</string>
+    <string name="login_failed">Login Failed. Please Try Again</string>
+    <string name="confirm_password">Password Confirm</string>
+    <string name="password_not_match">Password Not Matched</string>
+    <string name="username">Username</string>
+    <string name="register_failed">Register Failed. Please Try Again</string>
+    <string name="nav_menu_user">User</string>
+    <string name="menu_nav_my_profile">My Profile</string>
+    <string name="menu_nav_logout">Logout</string>
+    <string name="error_logout">Error Logout User. Please Try Again Later</string>
 </resources>

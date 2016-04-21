@@ -1,7 +1,6 @@
 package com.audioservice.audios;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.audioservice.jeffchien.audios.map.IAudioSProxy;
@@ -15,22 +14,14 @@ import retrofit.Retrofit;
 public class EntryActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onResume(){
+        super.onResume();
 
         /**
          * Initialize most of the application specific stuffs
+         * MUST call them in onResume because we would check network status
+         * In global activity callbacks
          **/
-
-        //Check network
-        if(!Public.Routines.isConnected(this)){
-            //Offline, only show local file fragment
-            Intent intent = new Intent(EntryActivity.this, ViewerActivity.class);
-            intent.putExtra(Public.Constants.EXTRA_BOOL_SHOW_LOCAL_ONLY, true);
-            intent.putExtra(Public.Constants.EXTRA_STRING_SHOW_TOAST_MESSAGE, getString(R.string.offline_mode));
-            startActivity(intent);
-            return;
-        }
 
         //Initialize AudioS API stuffs
         Public.AudioS = new AudioSFactory(this).create();

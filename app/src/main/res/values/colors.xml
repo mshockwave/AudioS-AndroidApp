@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#009688</color>
     <color name="colorAccent2">#E91E63</color>
+    <color name="colorAccent2Dark">#880E4F</color>
+
+    <color name="accentDisable">#F06292</color>
+
+    <color name="red500">#F44336</color>
     
     <color name="grey300">#E0E0E0</color>
     <color name="grey400">#BDBDBD</color>
