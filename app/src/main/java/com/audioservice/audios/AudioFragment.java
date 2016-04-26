@@ -3,10 +3,8 @@ package com.audioservice.audios;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +12,16 @@ import android.view.ViewGroup;
 import java.io.File;
 import java.util.ArrayList;
 
-public class LocalAudioFragment extends Fragment {
+public class AudioFragment extends Fragment {
 
     ArrayList<String> list = new ArrayList<>();
 
-    public LocalAudioFragment() {
+    public AudioFragment() {
         // Required empty public constructor
     }
 
-    public static LocalAudioFragment newInstance(String param1, String param2) {
-        return new LocalAudioFragment();
+    public static AudioFragment newInstance(String param1, String param2) {
+        return new AudioFragment();
     }
 
     @Override
@@ -35,7 +33,7 @@ public class LocalAudioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_local_audio, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_audio, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // Add the file list to list array
@@ -44,8 +42,8 @@ public class LocalAudioFragment extends Fragment {
         for (File f : fileArr)
             list.add(f.getName());
         // Set the adapter
-        LocalAudioFragmentAdapter localAudioFragmentAdapter = new LocalAudioFragmentAdapter(list);
-        recyclerView.setAdapter(localAudioFragmentAdapter);
+        AudioFragmentAdapter audioFragmentAdapter = new AudioFragmentAdapter(getContext(), list);
+        recyclerView.setAdapter(audioFragmentAdapter);
         return rootView;
     }
 

@@ -32,17 +32,15 @@ public class ViewerActivity extends AppCompatActivity {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         if(intent.getBooleanExtra(Public.Constants.EXTRA_BOOL_SHOW_LOCAL_ONLY, false)){
             //Show only local tabs
-            adapter.addFragment(getString(R.string.viewer_local_resources),
-                        LocalResourcesFragment.newInstance("",""));
-            adapter.addFragment(getString(R.string.viewer_local_audio),
-                        LocalAudioFragment.newInstance("",""));
+            adapter.addFragment(getString(R.string.viewer_audio),
+                        AudioFragment.newInstance("",""));
         }else{
             adapter.addFragment(getString(R.string.viewer_resources),
                         ResourcesFragment.newInstance("",""));
             adapter.addFragment(getString(R.string.viewer_local_resources),
                         LocalResourcesFragment.newInstance("",""));
-            adapter.addFragment(getString(R.string.viewer_local_audio),
-                        LocalAudioFragment.newInstance("",""));
+            adapter.addFragment(getString(R.string.viewer_audio),
+                        AudioFragment.newInstance("",""));
         }
 
         viewPager.setAdapter(adapter);
