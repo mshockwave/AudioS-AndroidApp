@@ -5,6 +5,7 @@
 [submodule "map"]
   path = map
   url = https://github.com/mshockwave/AudioS-AndroidApp-Map-Module.git
+  ignore = dirty
 
 
 [submodule "ringdroid"]
